@@ -3,9 +3,9 @@ import CompanyDetailHeader from "@/components/company-details/company-detail-hea
 import CompanyDetailTabs from "@/components/company-details/company-detail-tabs"
 import { getCompanyById } from "@/lib/companies-data"
 
-export default function CompanyDetailsPage({ params }: { params: Promise<{ id: string }> }) {
+export default async function CompanyDetailsPage({ params }: { params: Promise<{ id: string }> }) {
   // Get the company ID from params
-  const { id } = params
+  const { id } = await params
   const companyId = Number.parseInt(id, 10)
 
   // Fetch company data

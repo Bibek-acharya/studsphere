@@ -1,24 +1,36 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Clock, Mail } from "lucide-react"
 import Link from "next/link"
 
-export default function ApplicationStatusPage() {
-  const [applicationData, setApplicationData] = useState<any>(null)
+interface ApplicationData {
+  fullName: string
+  email: string
+  company: string
+  designation: string
+}
 
-  useEffect(() => {
-    // Retrieve application data from localStorage
-    const data = localStorage.getItem("mentorApplication")
-    if (data) {
-      setApplicationData(JSON.parse(data))
+export default function ApplicationStatusPage() {
+  const [applicationData] = useState<ApplicationData | null>(() => {
+    // Retrieve application data from localStorage on initial render
+    if (typeof window !== 'undefined') {
+      const data = localStorage.getItem("mentorApplication")
+      if (data) {
+        try {
+          return JSON.parse(data)
+        } catch {
+          return null
+        }
+      }
     }
-  }, [])
+    return null
+  })
 
   return (
     <main className="w-full">
-      <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white">
+      <div className="min-h-screen bg-linear-to-b from-blue-50 to-white">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24">
           {/* Status Card */}
           <div className="bg-white rounded-lg shadow-lg p-8 sm:p-12 text-center">
@@ -43,7 +55,7 @@ export default function ApplicationStatusPage() {
               <h2 className="text-xl font-semibold text-gray-900 mb-6">What Happens Next?</h2>
               <div className="space-y-4 text-left max-w-2xl mx-auto">
                 <div className="flex gap-4">
-                  <div className="flex-shrink-0">
+                  <div className="shrink-0">
                     <div className="flex items-center justify-center h-10 w-10 rounded-full bg-blue-600 text-white font-bold">
                       1
                     </div>
@@ -57,19 +69,19 @@ export default function ApplicationStatusPage() {
                 </div>
 
                 <div className="flex gap-4">
-                  <div className="flex-shrink-0">
+                  <div className="shrink-0">
                     <div className="flex items-center justify-center h-10 w-10 rounded-full bg-blue-600 text-white font-bold">
                       2
                     </div>
                   </div>
                   <div>
                     <h3 className="font-semibold text-gray-900">Initial Review (48-72 hours)</h3>
-                    <p className="text-gray-600 text-sm mt-1">We'll assess your expertise and mentoring approach.</p>
+                    <p className="text-gray-600 text-sm mt-1">We&apos;ll assess your expertise and mentoring approach.</p>
                   </div>
                 </div>
 
                 <div className="flex gap-4">
-                  <div className="flex-shrink-0">
+                  <div className="shrink-0">
                     <div className="flex items-center justify-center h-10 w-10 rounded-full bg-blue-600 text-white font-bold">
                       3
                     </div>
@@ -77,7 +89,7 @@ export default function ApplicationStatusPage() {
                   <div>
                     <h3 className="font-semibold text-gray-900">Approval & Onboarding</h3>
                     <p className="text-gray-600 text-sm mt-1">
-                      Once approved, you'll receive onboarding instructions and can start mentoring.
+                      Once approved, you&apos;ll receive onboarding instructions and can start mentoring.
                     </p>
                   </div>
                 </div>
@@ -111,11 +123,11 @@ export default function ApplicationStatusPage() {
 
             {/* Notification Info */}
             <div className="flex items-start gap-4 bg-green-50 p-4 rounded-lg border border-green-200 mb-8">
-              <Mail className="text-green-600 flex-shrink-0 mt-1" size={24} />
+              <Mail className="text-green-600 shrink-0 mt-1" size={24} />
               <div className="text-left">
                 <h4 className="font-semibold text-gray-900 mb-1">Check Your Email</h4>
                 <p className="text-gray-700 text-sm">
-                  We'll send you an email update as soon as your application is reviewed. Make sure to check your inbox
+                  We&apos;ll send you an email update as soon as your application is reviewed. Make sure to check your inbox
                   and spam folder.
                 </p>
               </div>

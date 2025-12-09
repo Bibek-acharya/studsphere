@@ -1,9 +1,10 @@
 "use client"
 
 import JobSearchResults from "@/components/jobs/job-search-results"
+import type { JobListing } from "@/lib/jobs-data"
 
 interface JobSearchSectionsProps {
-  jobs: any[]
+  jobs: JobListing[]
   searchParams: {
     keywords?: string
     location?: string
@@ -12,5 +13,12 @@ interface JobSearchSectionsProps {
 }
 
 export function JobSearchPageSections({ jobs, searchParams }: JobSearchSectionsProps) {
-  return <JobSearchResults jobs={jobs} searchParams={searchParams} />
+  // Provide default values for required searchParams
+  const normalizedSearchParams = {
+    keywords: searchParams.keywords || '',
+    location: searchParams.location || '',
+    jobType: searchParams.jobType || '',
+  }
+  
+  return <JobSearchResults jobs={jobs} searchParams={normalizedSearchParams} />
 }

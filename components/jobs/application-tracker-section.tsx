@@ -195,7 +195,7 @@ function PhaseSection({
     <section className="mb-12">
       <div className="mb-6">
         <div
-          className={`inline-flex items-center gap-3 mb-3 p-3 rounded-full bg-gradient-to-r ${statusColors[status]} text-white`}
+          className={`inline-flex items-center gap-3 mb-3 p-3 rounded-full bg-linear-to-r ${statusColors[status]} text-white`}
         >
           <span className="text-xl">{Icon}</span>
         </div>

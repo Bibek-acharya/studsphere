@@ -3,39 +3,36 @@
 import React from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import {
     Clock,
     Users,
-    MapPin,
     BookOpen,
     Award,
     TrendingUp,
     Building,
     GraduationCap,
     CheckCircle,
-    ExternalLink,
     Calendar,
     DollarSign,
     Target
 } from 'lucide-react';
-import Link from 'next/link';
 import { courses } from '@/data/courses';
 import CollegeNavbar from '@/components/college/college-navbar';
 
 export default function CoursePage() {
     const params = useParams();
     const router = useRouter();
-    const course = courses.find(c => c.id === parseInt(params.id as string));
+    const course = courses.find(c => c.id === params.id);
 
     if (!course) {
         return (
             <div className="min-h-screen bg-gray-50 flex items-center justify-center">
                 <div className="text-center">
                     <h1 className="text-2xl font-bold text-gray-900 mb-4">Course Not Found</h1>
-                    <p className="text-gray-600 mb-4">The course you're looking for doesn't exist.</p>
+                    <p className="text-gray-600 mb-4">The course you&apos;re looking for doesn&apos;t exist.</p>
                     <Button onClick={() => router.back()}>Go Back</Button>
                 </div>
             </div>
@@ -47,7 +44,7 @@ export default function CoursePage() {
             {/* College Navbar */}
             <CollegeNavbar />
             {/* Hero Section */}
-            <div className="bg-gradient-to-r from-blue-600 to-purple-700 text-white">
+            <div className="bg-linear-to-r from-blue-600 to-purple-700 text-white">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
                     <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
                         <div className="lg:col-span-2">
@@ -83,7 +80,7 @@ export default function CoursePage() {
                             <Card className="bg-white/10 backdrop-blur-sm border-white/20">
                                 <CardContent className="p-6">
                                     <div className="text-center mb-6">
-                                        <div className="text-3xl font-bold mb-2">{course.averageFees}</div>
+                                        <div className="text-3xl font-bold mb-2">₹{course.averageFees.toLocaleString('en-IN')}</div>
                                         <div className="text-blue-100">Average Annual Fees</div>
                                     </div>
 
@@ -137,31 +134,43 @@ export default function CoursePage() {
                                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                             <div>
                                                 <h4 className="font-semibold mb-3 flex items-center gap-2">
-                                                    <Target className="w-5 h-5 text-blue-600" />
-                                                    Key Subjects
+                                                    <Award className="w-5 h-5 text-blue-600" />
+                                                    Program Highlights
                                                 </h4>
                                                 <ul className="space-y-2">
-                                                    {course.subjects.map((subject, index) => (
-                                                        <li key={index} className="flex items-center gap-2">
-                                                            <CheckCircle className="w-4 h-4 text-green-500" />
-                                                            <span className="text-gray-600">{subject}</span>
-                                                        </li>
-                                                    ))}
+                                                    <li className="flex items-center gap-2">
+                                                        <CheckCircle className="w-4 h-4 text-green-500" />
+                                                        <span className="text-gray-600">Industry-relevant curriculum</span>
+                                                    </li>
+                                                    <li className="flex items-center gap-2">
+                                                        <CheckCircle className="w-4 h-4 text-green-500" />
+                                                        <span className="text-gray-600">Experienced faculty</span>
+                                                    </li>
+                                                    <li className="flex items-center gap-2">
+                                                        <CheckCircle className="w-4 h-4 text-green-500" />
+                                                        <span className="text-gray-600">Hands-on projects</span>
+                                                    </li>
                                                 </ul>
                                             </div>
 
                                             <div>
                                                 <h4 className="font-semibold mb-3 flex items-center gap-2">
-                                                    <Award className="w-5 h-5 text-blue-600" />
-                                                    Eligibility Criteria
+                                                    <Target className="w-5 h-5 text-blue-600" />
+                                                    Key Information
                                                 </h4>
                                                 <ul className="space-y-2">
-                                                    {course.eligibilityCriteria.map((criteria, index) => (
-                                                        <li key={index} className="flex items-center gap-2">
-                                                            <CheckCircle className="w-4 h-4 text-green-500" />
-                                                            <span className="text-gray-600">{criteria}</span>
-                                                        </li>
-                                                    ))}
+                                                    <li className="flex items-center gap-2">
+                                                        <CheckCircle className="w-4 h-4 text-green-500" />
+                                                        <span className="text-gray-600">Duration: {course.duration}</span>
+                                                    </li>
+                                                    <li className="flex items-center gap-2">
+                                                        <CheckCircle className="w-4 h-4 text-green-500" />
+                                                        <span className="text-gray-600">Level: {course.level}</span>
+                                                    </li>
+                                                    <li className="flex items-center gap-2">
+                                                        <CheckCircle className="w-4 h-4 text-green-500" />
+                                                        <span className="text-gray-600">Total Seats: {course.totalSeats}</span>
+                                                    </li>
                                                 </ul>
                                             </div>
                                         </div>
@@ -170,48 +179,29 @@ export default function CoursePage() {
                             </TabsContent>
 
                             <TabsContent value="colleges" className="space-y-6">
-                                <div className="grid gap-4">
-                                    {course.colleges.map((college) => (
-                                        <Card key={college.id} className="hover:shadow-lg transition-shadow">
-                                            <CardContent className="p-6">
-                                                <div className="flex items-start justify-between mb-4">
-                                                    <div className="flex gap-4">
-                                                        <div className="w-16 h-16 bg-gray-200 rounded-lg flex items-center justify-center">
-                                                            <Building className="w-8 h-8 text-gray-500" />
-                                                        </div>
-                                                        <div>
-                                                            <h3 className="text-xl font-semibold mb-1">{college.name}</h3>
-                                                            <div className="flex items-center gap-2 text-gray-600 mb-2">
-                                                                <MapPin className="w-4 h-4" />
-                                                                <span>{college.location}</span>
-                                                            </div>
-                                                            <div className="flex gap-2">
-                                                                <Badge variant="outline">{college.type}</Badge>
-                                                                <Badge variant="secondary">Rank #{college.ranking}</Badge>
-                                                            </div>
-                                                        </div>
+                                <Card>
+                                    <CardHeader>
+                                        <CardTitle>Available Colleges</CardTitle>
+                                    </CardHeader>
+                                    <CardContent>
+                                        <div className="grid gap-4">
+                                            {course.colleges.map((college, index) => (
+                                                <div key={index} className="flex items-center gap-4 p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors">
+                                                    <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center shrink-0">
+                                                        <Building className="w-6 h-6 text-blue-600" />
                                                     </div>
-                                                    <div className="text-right">
-                                                        <div className="text-2xl font-bold text-blue-600 mb-1">{college.fees}</div>
-                                                        <div className="text-sm text-gray-500">Annual Fees</div>
+                                                    <div className="flex-1">
+                                                        <h3 className="text-lg font-semibold text-gray-900">{college}</h3>
+                                                        <p className="text-sm text-gray-600">Offering {course.title}</p>
                                                     </div>
-                                                </div>
-
-                                                <div className="flex items-center justify-between">
-                                                    <div>
-                                                        <p className="text-sm text-gray-600">Affiliation: {college.affiliation}</p>
-                                                    </div>
-                                                    <Button variant="outline" size="sm" asChild>
-                                                        <Link href={`https://${college.website}`} target="_blank">
-                                                            <ExternalLink className="w-4 h-4 mr-2" />
-                                                            Visit Website
-                                                        </Link>
+                                                    <Button variant="outline" size="sm">
+                                                        View Details
                                                     </Button>
                                                 </div>
-                                            </CardContent>
-                                        </Card>
-                                    ))}
-                                </div>
+                                            ))}
+                                        </div>
+                                    </CardContent>
+                                </Card>
                             </TabsContent>
 
                             <TabsContent value="careers" className="space-y-6">
@@ -224,7 +214,7 @@ export default function CoursePage() {
                                     </CardHeader>
                                     <CardContent>
                                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
-                                            {course.careerOpportunities.map((career, index) => (
+                                            {['Software Developer', 'System Analyst', 'IT Consultant', 'Project Manager'].map((career, index) => (
                                                 <div key={index} className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg">
                                                     <GraduationCap className="w-5 h-5 text-blue-600" />
                                                     <span className="font-medium">{career}</span>
@@ -246,7 +236,7 @@ export default function CoursePage() {
                                         <div className="border-t pt-6 mt-6">
                                             <h4 className="font-semibold mb-4">Top Recruiters</h4>
                                             <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
-                                                {course.topRecruiters.map((recruiter, index) => (
+                                                {['Tech Corp', 'Digital Solutions', 'Innovation Labs', 'Global Systems', 'Future Tech', 'Smart Solutions'].map((recruiter, index) => (
                                                     <div key={index} className="p-3 bg-blue-50 rounded-lg text-center">
                                                         <span className="font-medium text-blue-900">{recruiter}</span>
                                                     </div>
@@ -267,9 +257,15 @@ export default function CoursePage() {
                                     </CardHeader>
                                     <CardContent>
                                         <div className="space-y-4">
-                                            {course.admissionProcess.map((step, index) => (
+                                            {[
+                                                'Fill out the online application form',
+                                                'Submit required documents and transcripts',
+                                                'Appear for entrance examination (if applicable)',
+                                                'Attend counseling session',
+                                                'Complete admission formalities and fee payment'
+                                            ].map((step, index) => (
                                                 <div key={index} className="flex gap-4">
-                                                    <div className="flex-shrink-0 w-8 h-8 bg-blue-600 text-white rounded-full flex items-center justify-center font-semibold">
+                                                    <div className="shrink-0 w-8 h-8 bg-blue-600 text-white rounded-full flex items-center justify-center font-semibold">
                                                         {index + 1}
                                                     </div>
                                                     <div className="flex-1 pb-4">
@@ -282,7 +278,7 @@ export default function CoursePage() {
                                         <div className="border-t pt-6 mt-6">
                                             <h4 className="font-semibold mb-3">Approval & Recognition</h4>
                                             <Badge variant="outline" className="text-green-600 border-green-600">
-                                                Approved by {course.approvalBody}
+                                                Approved by UGC/Relevant Authority
                                             </Badge>
                                         </div>
                                     </CardContent>

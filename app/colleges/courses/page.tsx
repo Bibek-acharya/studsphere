@@ -6,8 +6,9 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Clock, Users, BookOpen, Search, Filter } from 'lucide-react';
+import { Clock, Users, BookOpen, Search } from 'lucide-react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { courses } from '@/data/courses';
 import CollegeNavbar from '@/components/college/college-navbar';
 
@@ -51,16 +52,7 @@ const CoursesPage = () => {
                 };
                 return getMaxSalary(b.averageSalary) - getMaxSalary(a.averageSalary);
             case 'Average Fees: Low to High':
-                // Extract numeric value from fees strings
-                const getMinFees = (fees: string) => {
-                    const matches = fees.match(/₹([\d,]+)/g);
-                    if (matches) {
-                        const numbers = matches.map(m => parseInt(m.replace(/[₹,]/g, '')));
-                        return Math.min(...numbers);
-                    }
-                    return 0;
-                };
-                return getMinFees(a.averageFees) - getMinFees(b.averageFees);
+                return a.averageFees - b.averageFees;
             default:
                 return 0;
         }
@@ -181,11 +173,14 @@ const CoursesPage = () => {
                                 <Card key={course.id} className="group hover:shadow-xl transition-all duration-300 border-0 shadow-lg overflow-hidden">
                                     <Link href={`/colleges/courses/${course.id}`}>
                                         <div className="relative overflow-hidden">
-                                            <img
-                                                src={course.image}
-                                                alt={course.title}
-                                                className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
-                                            />
+                                            <div className="relative w-full h-48">
+                                                <Image
+                                                    src={course.image}
+                                                    alt={course.title}
+                                                    fill
+                                                    className="object-cover group-hover:scale-105 transition-transform duration-300"
+                                                />
+                                            </div>
                                             <Badge className={`absolute top-3 left-3 ${getLevelColor(course.level)}`}>
                                                 {course.level}
                                             </Badge>
@@ -228,7 +223,7 @@ const CoursesPage = () => {
                                                     <p className="font-medium">{course.colleges.length} Available</p>
                                                 </div>
                                                 <div className="text-right">
-                                                    <p className="text-2xl font-bold text-blue-600">₹{course.averageFees.toLocaleString()}</p>
+                                                    <p className="text-2xl font-bold text-blue-600">₹{course.averageFees.toLocaleString('en-IN')}</p>
                                                     <p className="text-xs text-gray-500">Avg. Fees</p>
                                                 </div>
                                             </div>

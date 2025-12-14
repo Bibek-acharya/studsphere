@@ -1,4 +1,4 @@
-import { EmployerNavbar } from "@/components/employer/employer-navbar"
+
 import { PricingHeader } from "@/components/employer/pricing-header"
 import { PricingCards } from "@/components/employer/pricing-cards"
 import { NeedHelpSection } from "@/components/employer/need-help-section"
@@ -13,7 +13,7 @@ export const metadata = {
 export default function PricingPage() {
   return (
     <>
-      <EmployerNavbar />
+
       <main>
         <PricingHeader />
         <PricingCards />

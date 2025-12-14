@@ -4,6 +4,7 @@ import { Menu, X } from "lucide-react"
 import { useState, useEffect } from "react"
 import Link from "next/link"
 import Image from "next/image"
+import { usePathname } from "next/navigation"
 import { JobsDropdownModal } from "@/components/jobs-dropdown-modal"
 import { CompaniesDropdownModal } from "@/components/companies-dropdown-modal"
 import { ResumeToolsDropdownModal } from "@/components/resume-tools-dropdown-modal"
@@ -11,6 +12,8 @@ import { ResumeToolsDropdownModal } from "@/components/resume-tools-dropdown-mod
 export function Navbar() {
   const [isOpen, setIsOpen] = useState(false)
   const [isScrolled, setIsScrolled] = useState(false)
+  const pathname = usePathname()
+  const isEmployerPage = pathname?.startsWith('/jobs/employer')
 
   useEffect(() => {
     const handleScroll = () => {
@@ -54,13 +57,30 @@ export function Navbar() {
 
           {/* Right Actions - Responsive */}
           <div className="hidden md:flex items-center gap-2 lg:gap-3 shrink-0">
-            <Link
-              href="/jobs/employer"
-              className="text-blue-600 font-medium text-sm hover:text-blue-700 flex items-center gap-1"
-            >
-              Employer zone
-              <span>›</span>
-            </Link>
+            {isEmployerPage ? (
+              <>
+                <Link
+                  href="/jobs/employer#product"
+                  className="text-gray-700 font-medium text-sm hover:text-gray-900"
+                >
+                  Product
+                </Link>
+                <Link
+                  href="/jobs/employer/pricing"
+                  className="text-blue-600 font-medium text-sm hover:text-blue-700 px-4 py-2 border border-blue-600 rounded-lg"
+                >
+                  Price
+                </Link>
+              </>
+            ) : (
+              <Link
+                href="/jobs/employer"
+                className="text-blue-600 font-medium text-sm hover:text-blue-700 flex items-center gap-1"
+              >
+                Employer zone
+                <span>›</span>
+              </Link>
+            )}
           </div>
 
           {/* Mobile Menu Button */}
@@ -101,9 +121,26 @@ export function Navbar() {
                 Blogs
               </Link>
             </div>
-            <Link href="/jobs/employer" className="block text-blue-600 hover:text-blue-700 font-medium">
-              Employer zone
-            </Link>
+            {isEmployerPage ? (
+              <div className="flex gap-2">
+                <Link
+                  href="/jobs/employer#product"
+                  className="block text-gray-700 hover:text-gray-900 font-medium"
+                >
+                  Product
+                </Link>
+                <Link
+                  href="/jobs/employer/pricing"
+                  className="block text-blue-600 hover:text-blue-700 font-medium px-4 py-2 border border-blue-600 rounded-lg"
+                >
+                  Price
+                </Link>
+              </div>
+            ) : (
+              <Link href="/jobs/employer" className="block text-blue-600 hover:text-blue-700 font-medium">
+                Employer zone
+              </Link>
+            )}
           </div>
         )}
       </div>

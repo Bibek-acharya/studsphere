@@ -6,7 +6,6 @@ import SuccessSection from '@/components/college/SuccessSection'
 import TeacherProfilesSection from '@/components/college/TeacherProfilesSection'
 import TestimonialsSection from '@/components/college/TestimonialsSection'
 import LatestNewsSection from '@/components/college/LatestNewsSection'
-import React from 'react'
 import { AdsSection } from '@/components/college/ads-section'
 import ExploreCourses from '@/components/college/CoursesSection'
 

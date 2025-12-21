@@ -35,8 +35,8 @@ export default function SuccessSection() {
     },
     {
       id: 'exams',
-      title: 'Exams',
-      description: 'Prepare for entrance exams with our comprehensive study materials',
+      title: 'Courses Finder',
+      description: 'Helps you find the right courses for your career goals',
       icon: <BookOpen className="w-7 h-7 text-white" />,
       iconBg: 'bg-blue-500'
     }

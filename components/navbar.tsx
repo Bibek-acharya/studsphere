@@ -406,6 +406,11 @@ export function Navbar() {
                     Partner with us
                   </Link>
                 </DropdownMenuItem>
+                <DropdownMenuItem asChild>
+                  <Link href="/blog" onClick={() => setMoreOpen(false)} className="cursor-pointer">
+                    our news and stories
+                  </Link>
+                </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
           </div>

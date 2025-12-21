@@ -313,7 +313,7 @@ export default function CollegeDetailClient({ college }: CollegeDetailClientProp
                 <div className="space-y-4">
                   {college.admissionProcess.map((step, index) => (
                     <div key={index} className="flex items-start">
-                      <div className="flex-shrink-0 w-8 h-8 bg-purple-600 text-white rounded-full flex items-center justify-center text-sm font-semibold mr-4">
+                      <div className="shrink-0 w-8 h-8 bg-purple-600 text-white rounded-full flex items-center justify-center text-sm font-semibold mr-4">
                         {index + 1}
                       </div>
                       <div className="flex-1">
@@ -325,7 +325,7 @@ export default function CollegeDetailClient({ college }: CollegeDetailClientProp
               </div>
             </div>
             
-            <div className="bg-gradient-to-r from-blue-50 to-purple-50 p-5 rounded-lg border border-blue-100">
+            <div className="bg-linear-to-r from-blue-50 to-purple-50 p-5 rounded-lg border border-blue-100">
               <div className="flex items-center mb-3">
                 <div className="bg-blue-100 p-2 rounded-full mr-3">
                   <ExternalLink className="w-5 h-5 text-blue-600" />
@@ -352,7 +352,7 @@ export default function CollegeDetailClient({ college }: CollegeDetailClientProp
               {college.courses.slice(0, 4).map((course, index) => (
                 <div key={index} className="bg-white p-5 rounded-lg border border-gray-200 hover:shadow-md transition-shadow">
                   <div className="flex items-start mb-4">
-                    <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-purple-600 rounded-md mr-4 flex items-center justify-center">
+                    <div className="w-16 h-16 bg-linear-to-br from-blue-500 to-purple-600 rounded-md mr-4 flex items-center justify-center">
                       <BookOpen className="w-8 h-8 text-white" />
                     </div>
                     <div>
@@ -775,7 +775,7 @@ export default function CollegeDetailClient({ college }: CollegeDetailClientProp
             ].map((faq, index) => (
               <div key={index} className="bg-gray-50 p-5 rounded-lg border border-gray-200">
                 <div className="flex items-start">
-                  <div className="bg-purple-100 text-purple-600 p-2 rounded-full mr-3 flex-shrink-0">
+                  <div className="bg-purple-100 text-purple-600 p-2 rounded-full mr-3 shrink-0">
                     <MessageCircle className="w-4 h-4" />
                   </div>
                   <div>

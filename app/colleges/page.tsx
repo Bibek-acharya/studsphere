@@ -1,39 +1,37 @@
+"use client";
 
+import HeroSection from "@/components/college/HeroSection";
+import EventShowcase from "@/components/college/event-showcase";
+import SuccessSection from "@/components/college/SuccessSection";
 
-import HeroSection from '@/components/college/HeroSection'
-import EventShowcase from '@/components/college/event-showcase'
-import SuccessSection from '@/components/college/SuccessSection'
+import { TestimonialsSection } from "@/components/testimonials-section";
 
-import { TestimonialsSection } from '@/components/testimonials-section'
+import CourseSection from "@/components/college/coursesection";
 
-import CourseSection from '@/components/college/coursesection'
+import CollegeCard from "@/components/college/CoursesSection";
+import { ExamAnnouncements } from "@/components/college/exam-announcements";
+import { LatestNews } from "@/components/college/latest-news";
+import { useCollegeContext } from "@/components/college/college-context";
 
-import CollegeCard  from '@/components/college/CoursesSection'
-import { ExamAnnouncements } from '@/components/college/exam-announcements'
-import {LatestNews} from '@/components/college/latest-news'
+const Page = () => {
+  const { heroSectionRef } = useCollegeContext();
 
-
-const page = () => {
   return (
     <div>
-     
-      <HeroSection />
-      
-      
-     
+      <HeroSection ref={heroSectionRef} />
+
       <SuccessSection />
-    
-      <EventShowcase/>
+
+      <EventShowcase />
       <CourseSection />
-     
-      
-      <CollegeCard/>
+
+      <CollegeCard />
       <ExamAnnouncements />
       <LatestNews />
-     
+
       <TestimonialsSection />
     </div>
-  )
-}
+  );
+};
 
-export default page
+export default Page;

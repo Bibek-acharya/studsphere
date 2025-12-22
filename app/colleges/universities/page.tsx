@@ -104,12 +104,7 @@ const App: React.FC = () => {
           <Pagination />
         </main>
 
-        <footer className="bg-slate-900 text-gray-400 py-12 px-6 mt-auto">
-          <div className="max-w-screen-2xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
-            <div className="text-xl font-bold text-white">UniQuest</div>
-            <p className="text-sm">© 2024 UniQuest Discovery. All rights reserved.</p>
-          </div>
-        </footer>
+        
       </div>
     );
   }

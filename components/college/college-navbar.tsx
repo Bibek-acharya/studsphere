@@ -1,38 +1,42 @@
-"use client"
+"use client";
 
-import { Menu, X, Bell, ChevronDown } from "lucide-react"
-import { useState, useEffect } from "react"
-import Link from "next/link"
-import Image from "next/image"
-import { usePathname } from "next/navigation"
+import { Menu, X, Bell, ChevronDown } from "lucide-react";
+import { useState, useEffect } from "react";
+import Link from "next/link";
+import Image from "next/image";
+import { useCollegeContext } from "./college-context";
 
 const CollegeNavbar = () => {
-    const [isScholarshipOpen, setIsScholarshipOpen] = useState(false)
-    const [isMoreOpen, setIsMoreOpen] = useState(false)
-  const [isOpen, setIsOpen] = useState(false)
-  const [isScrolled, setIsScrolled] = useState(false)
-  const [isExploreOpen, setIsExploreOpen] = useState(false)
-  const pathname = usePathname()
-  const isInstitutionsPage = pathname?.startsWith('/institutions')
+  const { heroSectionRef } = useCollegeContext();
+  const [isScholarshipOpen, setIsScholarshipOpen] = useState(false);
+  const [isMoreOpen, setIsMoreOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [isExploreOpen, setIsExploreOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 0)
-    }
+      setIsScrolled(window.scrollY > 0);
+    };
 
-    window.addEventListener("scroll", handleScroll)
-    return () => window.removeEventListener("scroll", handleScroll)
-  }, [])
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   return (
     <nav className="bg-white border-b border-gray-200 sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 sm:py-4">
         <div className="flex items-center justify-between gap-4">
           {/* Logo - Responsive sizing - Only show when scrolled */}
-          <div className={`shrink-0 transition-all duration-300 ease-in-out overflow-hidden ${
-            isScrolled ? "w-[180px] opacity-100" : "w-0 opacity-0"
-          }`}>
-            <Link href="/" className="flex items-center gap-2 h-full whitespace-nowrap">
+          <div
+            className={`shrink-0 transition-all duration-300 ease-in-out overflow-hidden ${
+              isScrolled ? "w-[180px] opacity-100" : "w-0 opacity-0"
+            }`}
+          >
+            <Link
+              href="/"
+              className="flex items-center gap-2 h-full whitespace-nowrap"
+            >
               <Image
                 src="/logo.svg"
                 alt="Studsphere"
@@ -44,9 +48,11 @@ const CollegeNavbar = () => {
           </div>
 
           {/* Desktop Navigation */}
-          <div className={`hidden md:flex items-center gap-6 lg:gap-8 transition-all duration-300 ${
-            isScrolled ? "flex-1 justify-center" : "flex-1 justify-start"
-          }`}>
+          <div
+            className={`hidden md:flex items-center gap-6 lg:gap-8 transition-all duration-300 ${
+              isScrolled ? "flex-1 justify-center" : "flex-1 justify-start"
+            }`}
+          >
             {/* Explore dropdown */}
             <div className="relative">
               <button
@@ -58,53 +64,128 @@ const CollegeNavbar = () => {
                 <ChevronDown className="w-4 h-4" />
               </button>
               {isExploreOpen && (
-                <div className="absolute left-0 mt-2 w-[540px] bg-white border border-gray-200 rounded-2xl shadow-xl z-50 flex p-6 gap-8" onMouseDown={e => e.preventDefault()}>
+                <div
+                  className="absolute left-0 mt-2 w-[540px] bg-white border border-gray-200 rounded-2xl shadow-xl z-50 flex p-6 gap-8"
+                  onMouseDown={(e) => e.preventDefault()}
+                >
                   {/* OUR TOOLSET */}
                   <div className="flex-1">
-                    <div className="font-semibold text-gray-900 mb-4 text-[16px]">OUR TOOLSET</div>
+                    <div className="font-semibold text-gray-900 mb-4 text-[16px]">
+                      OUR TOOLSET
+                    </div>
                     <ul className="space-y-2">
                       <li>
-                        <Link href="/colleges/findcollege" className="flex items-center gap-3 p-2 rounded-lg hover:bg-gray-50 group">
-                          <span className="bg-blue-100 p-2 rounded-lg"><Image src="/college.png" alt="Find College" width={28} height={28} /></span>
+                        <Link
+                          href="/colleges/findcollege"
+                          className="flex items-center gap-3 p-2 rounded-lg hover:bg-gray-50 group"
+                        >
+                          <span className="bg-blue-100 p-2 rounded-lg">
+                            <Image
+                              src="/college.png"
+                              alt="Find College"
+                              width={28}
+                              height={28}
+                            />
+                          </span>
                           <span>
-                            <span className="font-bold text-[15px] text-gray-900">Find College</span>
-                            <div className="text-xs text-gray-500">Discover Your Perfect College</div>
+                            <span className="font-bold text-[15px] text-gray-900">
+                              Find College
+                            </span>
+                            <div className="text-xs text-gray-500">
+                              Discover Your Perfect College
+                            </div>
                           </span>
                         </Link>
                       </li>
                       <li>
-                        <Link href="/colleges/courses" className="flex items-center gap-3 p-2 rounded-lg hover:bg-blue-50 group">
-                          <span className="bg-blue-100 p-2 rounded-lg"><Image src="/course.png" alt="Course Finder" width={28} height={28} /></span>
+                        <Link
+                          href="/colleges/courses"
+                          className="flex items-center gap-3 p-2 rounded-lg hover:bg-blue-50 group"
+                        >
+                          <span className="bg-blue-100 p-2 rounded-lg">
+                            <Image
+                              src="/course.png"
+                              alt="Course Finder"
+                              width={28}
+                              height={28}
+                            />
+                          </span>
                           <span>
-                            <span className="font-bold text-[15px] text-blue-600 group-hover:underline">Course Finder</span>
-                            <div className="text-xs text-gray-500">Discover Your Perfect College</div>
+                            <span className="font-bold text-[15px] text-blue-600 group-hover:underline">
+                              Course Finder
+                            </span>
+                            <div className="text-xs text-gray-500">
+                              Discover Your Perfect College
+                            </div>
                           </span>
                         </Link>
                       </li>
                       <li>
-                        <Link href="/colleges/compare" className="flex items-center gap-3 p-2 rounded-lg hover:bg-gray-50 group">
-                          <span className="bg-yellow-100 p-2 rounded-lg"><Image src="/compare.png" alt="Compare College" width={28} height={28} /></span>
+                        <Link
+                          href="/colleges/compare"
+                          className="flex items-center gap-3 p-2 rounded-lg hover:bg-gray-50 group"
+                        >
+                          <span className="bg-yellow-100 p-2 rounded-lg">
+                            <Image
+                              src="/compare.png"
+                              alt="Compare College"
+                              width={28}
+                              height={28}
+                            />
+                          </span>
                           <span>
-                            <span className="font-bold text-[15px] text-gray-900">Compare college</span>
-                            <div className="text-xs text-gray-500">Compare Colleges Side-by-Side</div>
+                            <span className="font-bold text-[15px] text-gray-900">
+                              Compare college
+                            </span>
+                            <div className="text-xs text-gray-500">
+                              Compare Colleges Side-by-Side
+                            </div>
                           </span>
                         </Link>
                       </li>
                       <li>
-                        <Link href="/colleges/exams" className="flex items-center gap-3 p-2 rounded-lg hover:bg-gray-50 group">
-                          <span className="bg-yellow-100 p-2 rounded-lg"><Image src="/exams.png" alt="Exams" width={28} height={28} /></span>
+                        <Link
+                          href="/colleges/exams"
+                          className="flex items-center gap-3 p-2 rounded-lg hover:bg-gray-50 group"
+                        >
+                          <span className="bg-yellow-100 p-2 rounded-lg">
+                            <Image
+                              src="/exams.png"
+                              alt="Exams"
+                              width={28}
+                              height={28}
+                            />
+                          </span>
                           <span>
-                            <span className="font-bold text-[15px] text-gray-900">Exams</span>
-                            <div className="text-xs text-gray-500">Discover Your Perfect College</div>
+                            <span className="font-bold text-[15px] text-gray-900">
+                              Exams
+                            </span>
+                            <div className="text-xs text-gray-500">
+                              Discover Your Perfect College
+                            </div>
                           </span>
                         </Link>
                       </li>
                       <li>
-                        <Link href="/colleges/predictor" className="flex items-center gap-3 p-2 rounded-lg hover:bg-gray-50 group">
-                          <span className="bg-pink-100 p-2 rounded-lg"><Image src="/predict.png" alt="College Predictors" width={28} height={28} /></span>
+                        <Link
+                          href="/colleges/predictor"
+                          className="flex items-center gap-3 p-2 rounded-lg hover:bg-gray-50 group"
+                        >
+                          <span className="bg-pink-100 p-2 rounded-lg">
+                            <Image
+                              src="/predict.png"
+                              alt="College Predictors"
+                              width={28}
+                              height={28}
+                            />
+                          </span>
                           <span>
-                            <span className="font-bold text-[15px] text-gray-900">college predictors</span>
-                            <div className="text-xs text-gray-500">Discover Your Perfect College</div>
+                            <span className="font-bold text-[15px] text-gray-900">
+                              college predictors
+                            </span>
+                            <div className="text-xs text-gray-500">
+                              Discover Your Perfect College
+                            </div>
                           </span>
                         </Link>
                       </li>
@@ -112,50 +193,122 @@ const CollegeNavbar = () => {
                   </div>
                   {/* Explore Academics */}
                   <div className="flex-1">
-                    <div className="font-semibold text-gray-900 mb-4 text-[16px]">Explore Academics</div>
+                    <div className="font-semibold text-gray-900 mb-4 text-[16px]">
+                      Explore Academics
+                    </div>
                     <ul className="space-y-2">
                       <li>
-                        <Link href="/colleges/universities" className="flex items-center gap-3 p-2 rounded-lg hover:bg-gray-50 group">
-                          <span className="bg-green-100 p-2 rounded-lg"><Image src="/uni.png" alt="Universities" width={28} height={28} /></span>
+                        <Link
+                          href="/colleges/universities"
+                          className="flex items-center gap-3 p-2 rounded-lg hover:bg-gray-50 group"
+                        >
+                          <span className="bg-green-100 p-2 rounded-lg">
+                            <Image
+                              src="/uni.png"
+                              alt="Universities"
+                              width={28}
+                              height={28}
+                            />
+                          </span>
                           <span>
-                            <span className="font-bold text-[15px] text-gray-900">Universities</span>
-                            <div className="text-xs text-gray-500">Discover Your Perfect College</div>
+                            <span className="font-bold text-[15px] text-gray-900">
+                              Universities
+                            </span>
+                            <div className="text-xs text-gray-500">
+                              Discover Your Perfect College
+                            </div>
                           </span>
                         </Link>
                       </li>
                       <li>
-                        <Link href="/colleges/rankings" className="flex items-center gap-3 p-2 rounded-lg hover:bg-gray-100 group">
-                          <span className="bg-yellow-100 p-2 rounded-lg"><Image src="/ranking.png" alt="Rankings" width={28} height={28} /></span>
+                        <Link
+                          href="/colleges/rankings"
+                          className="flex items-center gap-3 p-2 rounded-lg hover:bg-gray-100 group"
+                        >
+                          <span className="bg-yellow-100 p-2 rounded-lg">
+                            <Image
+                              src="/ranking.png"
+                              alt="Rankings"
+                              width={28}
+                              height={28}
+                            />
+                          </span>
                           <span>
-                            <span className="font-bold text-[15px] text-gray-900">Rankings</span>
-                            <div className="text-xs text-gray-500">Discover Your Perfect College</div>
+                            <span className="font-bold text-[15px] text-gray-900">
+                              Rankings
+                            </span>
+                            <div className="text-xs text-gray-500">
+                              Discover Your Perfect College
+                            </div>
                           </span>
                         </Link>
                       </li>
                       <li>
-                        <Link href="/colleges/admissions" className="flex items-center gap-3 p-2 rounded-lg hover:bg-gray-50 group">
-                          <span className="bg-red-100 p-2 rounded-lg"><Image src="/admission.png" alt="Admissions" width={28} height={28} /></span>
+                        <Link
+                          href="/colleges/admissions"
+                          className="flex items-center gap-3 p-2 rounded-lg hover:bg-gray-50 group"
+                        >
+                          <span className="bg-red-100 p-2 rounded-lg">
+                            <Image
+                              src="/admission.png"
+                              alt="Admissions"
+                              width={28}
+                              height={28}
+                            />
+                          </span>
                           <span>
-                            <span className="font-bold text-[15px] text-gray-900">Admissions</span>
-                            <div className="text-xs text-gray-500">Discover Your Perfect College</div>
+                            <span className="font-bold text-[15px] text-gray-900">
+                              Admissions
+                            </span>
+                            <div className="text-xs text-gray-500">
+                              Discover Your Perfect College
+                            </div>
                           </span>
                         </Link>
                       </li>
                       <li>
-                        <Link href="/colleges/entrance" className="flex items-center gap-3 p-2 rounded-lg hover:bg-gray-50 group">
-                          <span className="bg-blue-100 p-2 rounded-lg"><Image src="/entrance.png" alt="Entrance" width={28} height={28} /></span>
+                        <Link
+                          href="/colleges/entrance"
+                          className="flex items-center gap-3 p-2 rounded-lg hover:bg-gray-50 group"
+                        >
+                          <span className="bg-blue-100 p-2 rounded-lg">
+                            <Image
+                              src="/entrance.png"
+                              alt="Entrance"
+                              width={28}
+                              height={28}
+                            />
+                          </span>
                           <span>
-                            <span className="font-bold text-[15px] text-gray-900">Entrance</span>
-                            <div className="text-xs text-gray-500">Discover Your Perfect College</div>
+                            <span className="font-bold text-[15px] text-gray-900">
+                              Entrance
+                            </span>
+                            <div className="text-xs text-gray-500">
+                              Discover Your Perfect College
+                            </div>
                           </span>
                         </Link>
                       </li>
                       <li>
-                        <Link href="/colleges/forum" className="flex items-center gap-3 p-2 rounded-lg hover:bg-gray-50 group">
-                          <span className="bg-yellow-100 p-2 rounded-lg"><Image src="/campus.png" alt="Campus Forum" width={28} height={28} /></span>
+                        <Link
+                          href="/colleges/forum"
+                          className="flex items-center gap-3 p-2 rounded-lg hover:bg-gray-50 group"
+                        >
+                          <span className="bg-yellow-100 p-2 rounded-lg">
+                            <Image
+                              src="/campus.png"
+                              alt="Campus Forum"
+                              width={28}
+                              height={28}
+                            />
+                          </span>
                           <span>
-                            <span className="font-bold text-[15px] text-gray-900">Campus Forum</span>
-                            <div className="text-xs text-gray-500">Discover Your Perfect College</div>
+                            <span className="font-bold text-[15px] text-gray-900">
+                              Campus Forum
+                            </span>
+                            <div className="text-xs text-gray-500">
+                              Discover Your Perfect College
+                            </div>
                           </span>
                         </Link>
                       </li>
@@ -165,7 +318,8 @@ const CollegeNavbar = () => {
               )}
             </div>
 
-            <div className="relative"
+            <div
+              className="relative"
               onMouseEnter={() => setIsScholarshipOpen(true)}
               onMouseLeave={() => setIsScholarshipOpen(false)}
             >
@@ -177,36 +331,81 @@ const CollegeNavbar = () => {
                 <ChevronDown className="w-4 h-4" />
               </button>
               {isScholarshipOpen && (
-                <div className="absolute left-0 mt-2 w-[320px] bg-white border border-gray-200 rounded-2xl shadow-xl z-50 p-4" onMouseDown={e => e.preventDefault()}>
-                  <div className="font-semibold text-gray-900 mb-4 text-[16px]">Find Scholarship</div>
+                <div
+                  className="absolute left-0 mt-2 w-[320px] bg-white border border-gray-200 rounded-2xl shadow-xl z-50 p-4"
+                  onMouseDown={(e) => e.preventDefault()}
+                >
+                  <div className="font-semibold text-gray-900 mb-4 text-[16px]">
+                    Scholarship Options
+                  </div>
                   <ul className="space-y-2">
                     <li>
-                      <Link href="/colleges/scholarships/finder" className="flex items-center gap-3 p-2 rounded-lg hover:bg-gray-50 group">
-                        <span className="bg-gray-100 p-2 rounded-lg"><Image src="/finder.png" alt="Scholarship Finder" width={28} height={28} /></span>
+                      <Link
+                        href="/colleges/scholarships"
+                        className="flex items-center gap-3 p-2 rounded-lg hover:bg-gray-50 group"
+                      >
+                        <span className="bg-gray-100 p-2 rounded-lg">
+                          <Image
+                            src="/finder.png"
+                            alt="Scholarship Finder"
+                            width={28}
+                            height={28}
+                          />
+                        </span>
                         <span>
-                          <span className="font-bold text-[15px] text-gray-900">Scholarship Finder</span>
-                          <div className="text-xs text-gray-500">Compare Colleges Side-by-Side</div>
+                          <span className="font-bold text-[15px] text-gray-900">
+                            Scholarship Finder
+                          </span>
+                          <div className="text-xs text-gray-500">
+                            Find scholarships that match you
+                          </div>
                         </span>
                       </Link>
                     </li>
                     <li>
-                      <Link href="/colleges/scholarships/featured" className="flex items-center gap-3 p-2 rounded-lg hover:bg-gray-50 group">
-                        <span className="bg-blue-100 p-2 rounded-lg"><Image src="/featured.png" alt="Featured Scholarship" width={28} height={28} /></span>
-                        <span>
-                          <span className="font-bold text-[15px] text-gray-900">Featured Scholarship</span>
-                          <div className="text-xs text-gray-500">Discover Your Perfect College</div>
+                      <button
+                        onClick={() => {
+                          if (heroSectionRef?.current) {
+                            heroSectionRef.current.scrollIntoView({
+                              behavior: "smooth",
+                              block: "start",
+                            });
+                          }
+                          setIsScholarshipOpen(false);
+                        }}
+                        className="flex items-center gap-3 p-2 rounded-lg hover:bg-blue-50 group w-full text-left"
+                      >
+                        <span className="bg-blue-100 p-2 rounded-lg">
+                          <Image
+                            src="/featured.png"
+                            alt="Apply for Scholarship"
+                            width={28}
+                            height={28}
+                          />
                         </span>
-                      </Link>
+                        <span>
+                          <span className="font-bold text-[15px] text-gray-900">
+                            Apply for Scholarship
+                          </span>
+                          <div className="text-xs text-gray-500">
+                            Start your application process
+                          </div>
+                        </span>
+                      </button>
                     </li>
                   </ul>
                 </div>
               )}
             </div>
-           
-            <Link href="/colleges/resources" className="text-gray-700 hover:text-gray-900 font-medium text-sm">
+
+            <Link
+              href="/colleges/resources"
+              className="text-gray-700 hover:text-gray-900 font-medium text-sm"
+            >
               Study Resources
             </Link>
-            <div className="relative"
+            <div
+              className="relative"
               onMouseEnter={() => setIsMoreOpen(true)}
               onMouseLeave={() => setIsMoreOpen(false)}
             >
@@ -218,29 +417,72 @@ const CollegeNavbar = () => {
                 <ChevronDown className="w-4 h-4" />
               </button>
               {isMoreOpen && (
-                <div className="absolute left-0 mt-2 w-[220px] bg-white border border-gray-200 rounded-2xl shadow-xl z-50 p-2" onMouseDown={e => e.preventDefault()}>
+                <div
+                  className="absolute left-0 mt-2 w-[220px] bg-white border border-gray-200 rounded-2xl shadow-xl z-50 p-2"
+                  onMouseDown={(e) => e.preventDefault()}
+                >
                   <ul className="space-y-1">
                     <li>
-                      <Link href="/blog/news" className="flex items-center gap-2 px-4 py-2 rounded-lg hover:bg-gray-50 text-gray-800 font-medium">
-                        <span className="bg-blue-100 p-2 rounded-lg"><Image src="/news.png" alt="News" width={30} height={30} /></span>
+                      <Link
+                        href="/blog/news"
+                        className="flex items-center gap-2 px-4 py-2 rounded-lg hover:bg-gray-50 text-gray-800 font-medium"
+                      >
+                        <span className="bg-blue-100 p-2 rounded-lg">
+                          <Image
+                            src="/news.png"
+                            alt="News"
+                            width={30}
+                            height={30}
+                          />
+                        </span>
                         News
                       </Link>
                     </li>
                     <li>
-                      <Link href="/blog" className="flex items-center gap-2 px-4 py-2 rounded-lg hover:bg-gray-50 text-gray-800 font-medium">
-                        <span className="bg-pink-100 p-2 rounded-lg"><Image src="/blog.png" alt="Blogs" width={30} height={30} /></span>
+                      <Link
+                        href="/blog"
+                        className="flex items-center gap-2 px-4 py-2 rounded-lg hover:bg-gray-50 text-gray-800 font-medium"
+                      >
+                        <span className="bg-pink-100 p-2 rounded-lg">
+                          <Image
+                            src="/blog.png"
+                            alt="Blogs"
+                            width={30}
+                            height={30}
+                          />
+                        </span>
                         Blogs
                       </Link>
                     </li>
                     <li>
-                      <Link href="/colleges/events" className="flex items-center gap-2 px-4 py-2 rounded-lg hover:bg-gray-50 text-gray-800 font-medium">
-                        <span className="bg-yellow-100 p-2 rounded-lg"><Image src="/events.png" alt="Events" width={30} height={30} /></span>
+                      <Link
+                        href="/colleges/events"
+                        className="flex items-center gap-2 px-4 py-2 rounded-lg hover:bg-gray-50 text-gray-800 font-medium"
+                      >
+                        <span className="bg-yellow-100 p-2 rounded-lg">
+                          <Image
+                            src="/events.png"
+                            alt="Events"
+                            width={30}
+                            height={30}
+                          />
+                        </span>
                         Events
                       </Link>
                     </li>
                     <li>
-                      <Link href="/contact" className="flex items-center gap-2 px-4 py-2 rounded-lg hover:bg-gray-50 text-gray-800 font-medium">
-                        <span className="bg-green-100 p-2 rounded-lg"><Image src="/contact.png" alt="Contact Us" width={30} height={30} /></span>
+                      <Link
+                        href="/contact"
+                        className="flex items-center gap-2 px-4 py-2 rounded-lg hover:bg-gray-50 text-gray-800 font-medium"
+                      >
+                        <span className="bg-green-100 p-2 rounded-lg">
+                          <Image
+                            src="/contact.png"
+                            alt="Contact Us"
+                            width={30}
+                            height={30}
+                          />
+                        </span>
                         Contact Us
                       </Link>
                     </li>
@@ -270,34 +512,20 @@ const CollegeNavbar = () => {
             </div>
 
             {/* Institutions Zone Button */}
-            {isInstitutionsPage ? (
-              <>
-                <Link
-                  href="/institutions#product"
-                  className="text-gray-700 font-medium text-sm hover:text-gray-900"
-                >
-                  Product
-                </Link>
-                <Link
-                  href="/institutions/pricing"
-                  className="text-blue-600 font-medium text-sm hover:text-blue-700 px-4 py-2 border border-blue-600 rounded-lg"
-                >
-                  Price
-                </Link>
-              </>
-            ) : (
-              <Link
-                href="/institutions"
-                className="text-gray-700 font-medium text-sm hover:text-gray-900 flex items-center gap-1"
-              >
-                Institutions Zone
-                <span>›</span>
-              </Link>
-            )}
+            <Link
+              href="/colleges/institutions"
+              className="text-gray-700 font-medium text-sm hover:text-gray-900 flex items-center gap-1"
+            >
+              Institutions Zone
+              <span>›</span>
+            </Link>
           </div>
 
           {/* Mobile Menu Button */}
-          <button onClick={() => setIsOpen(!isOpen)} className="md:hidden p-2 hover:bg-gray-100 rounded-lg">
+          <button
+            onClick={() => setIsOpen(!isOpen)}
+            className="md:hidden p-2 hover:bg-gray-100 rounded-lg"
+          >
             {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
           </button>
         </div>
@@ -314,7 +542,7 @@ const CollegeNavbar = () => {
                 Studsphere for Students
               </Link>
             </div>
-            
+
             {/* Mobile: Scholarship Dropdown */}
             <div className="relative">
               <button
@@ -327,20 +555,48 @@ const CollegeNavbar = () => {
                 <div className="bg-white border border-gray-200 rounded-2xl shadow-xl z-50 p-2 mt-1">
                   <ul className="space-y-1">
                     <li>
-                      <Link href="/colleges/scholarships/finder" className="flex items-center gap-2 p-2 rounded-lg hover:bg-gray-50">
-                        <span className="bg-gray-100 p-2 rounded-lg"><Image src="/images/icons/scholarship-finder.svg" alt="Scholarship Finder" width={24} height={24} /></span>
+                      <Link
+                        href="/colleges/scholarships/finder"
+                        className="flex items-center gap-2 p-2 rounded-lg hover:bg-gray-50"
+                      >
+                        <span className="bg-gray-100 p-2 rounded-lg">
+                          <Image
+                            src="/images/icons/scholarship-finder.svg"
+                            alt="Scholarship Finder"
+                            width={24}
+                            height={24}
+                          />
+                        </span>
                         <span>
-                          <span className="font-bold text-[15px] text-gray-900">Scholarship Finder</span>
-                          <div className="text-xs text-gray-500">Compare Colleges Side-by-Side</div>
+                          <span className="font-bold text-[15px] text-gray-900">
+                            Scholarship Finder
+                          </span>
+                          <div className="text-xs text-gray-500">
+                            Compare Colleges Side-by-Side
+                          </div>
                         </span>
                       </Link>
                     </li>
                     <li>
-                      <Link href="/colleges/scholarships/featured" className="flex items-center gap-2 p-2 rounded-lg hover:bg-gray-50">
-                        <span className="bg-blue-100 p-2 rounded-lg"><Image src="/images/icons/featured-scholarship.svg" alt="Featured Scholarship" width={24} height={24} /></span>
+                      <Link
+                        href="/colleges/scholarships/featured"
+                        className="flex items-center gap-2 p-2 rounded-lg hover:bg-gray-50"
+                      >
+                        <span className="bg-blue-100 p-2 rounded-lg">
+                          <Image
+                            src="/images/icons/featured-scholarship.svg"
+                            alt="Featured Scholarship"
+                            width={24}
+                            height={24}
+                          />
+                        </span>
                         <span>
-                          <span className="font-bold text-[15px] text-gray-900">Featured Scholarship</span>
-                          <div className="text-xs text-gray-500">Discover Your Perfect College</div>
+                          <span className="font-bold text-[15px] text-gray-900">
+                            Featured Scholarship
+                          </span>
+                          <div className="text-xs text-gray-500">
+                            Discover Your Perfect College
+                          </div>
                         </span>
                       </Link>
                     </li>
@@ -348,10 +604,13 @@ const CollegeNavbar = () => {
                 </div>
               )}
             </div>
-            <Link href="/colleges/resources" className="block text-gray-700 hover:text-gray-900 font-medium">
+            <Link
+              href="/colleges/resources"
+              className="block text-gray-700 hover:text-gray-900 font-medium"
+            >
               Study Resources
             </Link>
-            
+
             {/* Mobile: More Dropdown */}
             <div className="relative">
               <button
@@ -364,16 +623,36 @@ const CollegeNavbar = () => {
                 <div className="bg-white border border-gray-200 rounded-2xl shadow-xl z-50 p-2 mt-1">
                   <ul className="space-y-1">
                     <li>
-                      <Link href="/blog/news" className="block px-4 py-2 rounded-lg hover:bg-gray-50 text-gray-800 font-medium">News</Link>
+                      <Link
+                        href="/blog/news"
+                        className="block px-4 py-2 rounded-lg hover:bg-gray-50 text-gray-800 font-medium"
+                      >
+                        News
+                      </Link>
                     </li>
                     <li>
-                      <Link href="/blog" className="block px-4 py-2 rounded-lg hover:bg-gray-50 text-gray-800 font-medium">Blogs</Link>
+                      <Link
+                        href="/blog"
+                        className="block px-4 py-2 rounded-lg hover:bg-gray-50 text-gray-800 font-medium"
+                      >
+                        Blogs
+                      </Link>
                     </li>
                     <li>
-                      <Link href="/events" className="block px-4 py-2 rounded-lg hover:bg-gray-50 text-gray-800 font-medium">Events</Link>
+                      <Link
+                        href="/events"
+                        className="block px-4 py-2 rounded-lg hover:bg-gray-50 text-gray-800 font-medium"
+                      >
+                        Events
+                      </Link>
                     </li>
                     <li>
-                      <Link href="/contact" className="block px-4 py-2 rounded-lg hover:bg-gray-50 text-gray-800 font-medium">Contact Us</Link>
+                      <Link
+                        href="/contact"
+                        className="block px-4 py-2 rounded-lg hover:bg-gray-50 text-gray-800 font-medium"
+                      >
+                        Contact Us
+                      </Link>
                     </li>
                   </ul>
                 </div>
@@ -396,31 +675,17 @@ const CollegeNavbar = () => {
               </div>
             </div>
 
-            {isInstitutionsPage ? (
-              <div className="flex gap-2 pt-2">
-                <Link
-                  href="/institutions#product"
-                  className="block text-gray-700 hover:text-gray-900 font-medium"
-                >
-                  Product
-                </Link>
-                <Link
-                  href="/institutions/pricing"
-                  className="block text-blue-600 hover:text-blue-700 font-medium px-4 py-2 border border-blue-600 rounded-lg"
-                >
-                  Price
-                </Link>
-              </div>
-            ) : (
-              <Link href="/institutions" className="block text-gray-700 hover:text-gray-900 font-medium">
-                Institutions Zone ›
-              </Link>
-            )}
+            <Link
+              href="/colleges/institutions"
+              className="block text-gray-700 hover:text-gray-900 font-medium"
+            >
+              Institutions Zone ›
+            </Link>
           </div>
         )}
       </div>
     </nav>
-  )
-}
+  );
+};
 
-export default CollegeNavbar
+export default CollegeNavbar;

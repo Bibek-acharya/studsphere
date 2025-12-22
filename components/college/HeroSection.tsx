@@ -1,17 +1,17 @@
-'use client';
+"use client";
 
-import { useState, useEffect } from 'react';
-import { Search } from 'lucide-react';
-import Link from 'next/link';
+import { useState, useEffect, forwardRef } from "react";
+import { Search } from "lucide-react";
+import Link from "next/link";
 
 interface CollegeLinkData {
   text: string;
   url: string;
 }
 
-export default function HeroSection() {
+const HeroSection = forwardRef<HTMLDivElement>((props, ref) => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  const [searchTerm, setSearchTerm] = useState('');
+  const [searchTerm, setSearchTerm] = useState("");
   const [showPredictorWidget, setShowPredictorWidget] = useState(true);
 
   const images = [
@@ -19,7 +19,7 @@ export default function HeroSection() {
     "https://wms.edigitalnepal.com/wms/files/ws-post-images/1721376755536_a3e7eaa1-89bd-4e71-a2aa-d6d170b26387.jpg",
     "https://wms.edigitalnepal.com/wms/files/ws-post-images/1746680157939_e86a10b4-e740-496b-bb7c-21ddbd5fd681.jpg",
     "https://media.collegeinfonepal.com/information_category/Top-BCA-College-in-Nepal.jpg",
-    "https://apexcollege.edu.np/images/homepage/university/uni-photo-new-new.png"
+    "https://apexcollege.edu.np/images/homepage/university/uni-photo-new-new.png",
   ];
 
   const collegeLinksData: CollegeLinkData[] = [
@@ -27,7 +27,7 @@ export default function HeroSection() {
     { text: "techuniversity.edu", url: "https://web.mit.edu/" },
     { text: "businessschool.com", url: "https://www.wharton.upenn.edu/" },
     { text: "medicalacademy.org", url: "https://www.hopkinsmedicine.org/" },
-    { text: "artscollege.edu", url: "https://www.risd.edu/" }
+    { text: "artscollege.edu", url: "https://www.risd.edu/" },
   ];
 
   useEffect(() => {
@@ -49,7 +49,9 @@ export default function HeroSection() {
 
   const handleSearch = () => {
     if (searchTerm.trim()) {
-      alert(`You searched for: "${searchTerm}". In a full application, results would be displayed here.`);
+      alert(
+        `You searched for: "${searchTerm}". In a full application, results would be displayed here.`
+      );
     } else {
       alert("Please enter a college name, location, or program to search.");
     }
@@ -60,7 +62,7 @@ export default function HeroSection() {
   };
 
   const currentCollegeLink = collegeLinksData[currentImageIndex];
-  const displayText = currentCollegeLink?.text.startsWith('www.')
+  const displayText = currentCollegeLink?.text.startsWith("www.")
     ? currentCollegeLink.text.substring(4)
     : currentCollegeLink?.text;
 
@@ -81,7 +83,7 @@ export default function HeroSection() {
           animation: fade-in-up-delay-2 1s ease-out 0.6s both;
         }
       `}</style>
-      <div className="relative w-full p-4">
+      <div ref={ref} className="relative w-full p-4">
         <div className="relative min-h-screen w-full flex flex-col items-center justify-center rounded-3xl overflow-hidden">
           {/* Background Image Slider */}
           <div className="absolute inset-0 z-0">
@@ -90,9 +92,10 @@ export default function HeroSection() {
                 key={index}
                 src={src}
                 alt={`College Campus ${index + 1}`}
-                className={`absolute top-0 left-0 w-full h-full object-cover transition-opacity duration-1500 ${index === currentImageIndex ? 'opacity-100' : 'opacity-0'
-                  }`}
-                style={{ filter: 'brightness(0.7)' }}
+                className={`absolute top-0 left-0 w-full h-full object-cover transition-opacity duration-1500 ${
+                  index === currentImageIndex ? "opacity-100" : "opacity-0"
+                }`}
+                style={{ filter: "brightness(0.7)" }}
               />
             ))}
             {/* Dark overlay for better text readability */}
@@ -102,11 +105,16 @@ export default function HeroSection() {
           {/* Main Content */}
           <div className="relative z-20 text-center max-w-4xl mx-auto p-8 animate-fade-in-up">
             <h1 className="text-6xl lg:text-4xl md:text-3xl sm:text-2xl leading-tight font-extrabold mb-6 text-white text-shadow-strong letter-spacing-tight">
-              Find Your Perfect <span className="bg-gradient-to-r from-blue-500 to-green-500 bg-clip-text text-transparent">College</span>
+              Find Your Perfect{" "}
+              <span className="bg-gradient-to-r from-blue-500 to-green-500 bg-clip-text text-transparent">
+                College
+              </span>
             </h1>
 
             <p className="text-xl md:text-lg text-white/95 mb-10 max-w-2xl mx-auto text-shadow-medium font-normal leading-relaxed">
-              Discover and compare colleges with our free search tool. Get insights on admissions, programs, and student reviews to build your ideal college list.
+              Discover and compare colleges with our free search tool. Get
+              insights on admissions, programs, and student reviews to build
+              your ideal college list.
             </p>
 
             {/* Search Bar */}
@@ -118,7 +126,7 @@ export default function HeroSection() {
                 onChange={(e) => setSearchTerm(e.target.value)}
                 placeholder="Search by college name, location, or program..."
                 className="w-full py-5 pl-14 pr-32 rounded-full border border-white/40 text-lg bg-white/98 shadow-xl transition-all duration-400 focus:outline-none focus:border-blue-500 focus:shadow-2xl focus:bg-white text-gray-800"
-                onKeyPress={(e) => e.key === 'Enter' && handleSearch()}
+                onKeyPress={(e) => e.key === "Enter" && handleSearch()}
               />
               <button
                 onClick={handleSearch}
@@ -131,9 +139,24 @@ export default function HeroSection() {
             {/* Quick Links */}
             <div className="flex flex-wrap justify-center gap-4 mb-8">
               <span className="text-white/80 text-sm">Your recent visit:</span>
-              <Link href="/colleges" className="text-white hover:text-blue-300 text-sm underline">BIT Colleges</Link>
-              <Link href="/colleges/predictor" className="text-white hover:text-blue-300 text-sm underline">college Predictor</Link>
-              <Link href="/colleges/scholarships" className="text-white hover:text-blue-300 text-sm underline">Scholarship</Link>
+              <Link
+                href="/colleges"
+                className="text-white hover:text-blue-300 text-sm underline"
+              >
+                BIT Colleges
+              </Link>
+              <Link
+                href="/colleges/predictor"
+                className="text-white hover:text-blue-300 text-sm underline"
+              >
+                college Predictor
+              </Link>
+              <Link
+                href="/colleges/scholarships"
+                className="text-white hover:text-blue-300 text-sm underline"
+              >
+                Scholarship
+              </Link>
             </div>
           </div>
 
@@ -182,10 +205,11 @@ export default function HeroSection() {
               <button
                 key={index}
                 onClick={() => handleDotClick(index)}
-                className={`w-3 h-3 rounded-full border border-white/40 transition-all duration-400 ${index === currentImageIndex
-                  ? 'bg-white scale-130 shadow-white'
-                  : 'bg-white/70 hover:bg-white/90'
-                  }`}
+                className={`w-3 h-3 rounded-full border border-white/40 transition-all duration-400 ${
+                  index === currentImageIndex
+                    ? "bg-white scale-130 shadow-white"
+                    : "bg-white/70 hover:bg-white/90"
+                }`}
               />
             ))}
           </div>
@@ -207,4 +231,8 @@ export default function HeroSection() {
       </div>
     </>
   );
-}
+});
+
+HeroSection.displayName = "HeroSection";
+
+export default HeroSection;

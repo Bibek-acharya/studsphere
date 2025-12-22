@@ -1,231 +1,213 @@
-import ScholarshipCard from "./scholarship-card"
-import { Button } from "@/components/ui/button"
-import { ChevronLeft, ChevronRight } from "lucide-react"
+"use client";
 
-// Mock data - replace with actual API call
-const scholarships = [
-  {
-    id: 1,
-    type: "Merit-Based",
-    discount: "100% off",
-    title: "TU Merit Scholarship",
-    university: "Tribhuvan University",
-    level: "Bachelors",
-    field: "Engineering",
-    covers: "Full Tuition",
-    location: "Kathmandu",
-    benefits: ["Exam Fee", "Exam Fee"],
-    status: "high-competition",
-    deadline: "Oct 15,2024",
-  },
-  {
-    id: 2,
-    type: "Merit-Based",
-    discount: "100% off",
-    title: "TU Merit Scholarship",
-    university: "Tribhuvan University",
-    level: "Bachelors",
-    field: "Engineering",
-    covers: "Full Tuition",
-    location: "Kathmandu",
-    benefits: ["Exam Fee", "Exam Fee"],
-    status: "available",
-    deadline: "Oct 15,2024",
-  },
-  {
-    id: 3,
-    type: "Merit-Based",
-    discount: "100% off",
-    title: "TU Merit Scholarship",
-    university: "Tribhuvan University",
-    level: "Bachelors",
-    field: "Engineering",
-    covers: "Full Tuition",
-    location: "Kathmandu",
-    benefits: ["Exam Fee", "Exam Fee"],
-    status: "limited",
-    statusText: "CLOSING SOON",
-    deadline: "Oct 15,2024",
-  },
-  {
-    id: 4,
-    type: "Merit-Based",
-    discount: "100% off",
-    title: "TU Merit Scholarship",
-    university: "Tribhuvan University",
-    level: "Bachelors",
-    field: "Engineering",
-    covers: "Full Tuition",
-    location: "Kathmandu",
-    benefits: ["Exam Fee", "Exam Fee"],
-    status: "available",
-    deadline: "Oct 15,2024",
-  },
-  {
-    id: 5,
-    type: "Need-Based",
-    discount: "75% off",
-    title: "KU Financial Aid Scholarship",
-    university: "Kathmandu University",
-    level: "Bachelors",
-    field: "Management",
-    covers: "Partial Tuition",
-    location: "Dhulikhel",
-    benefits: ["Tuition Fee", "Books"],
-    status: "available",
-    deadline: "Nov 20,2024",
-  },
-  {
-    id: 6,
-    type: "Merit-Based",
-    discount: "50% off",
-    title: "Pokhara University Excellence Award",
-    university: "Pokhara University",
-    level: "Masters",
-    field: "IT / Computer Science",
-    covers: "Partial Tuition",
-    location: "Pokhara",
-    benefits: ["Exam Fee"],
-    status: "high-competition",
-    deadline: "Dec 1,2024",
-  },
-  {
-    id: 7,
-    type: "Merit-Based",
-    discount: "100% off",
-    title: "IOE Full Bright Scholarship",
-    university: "Institute of Engineering",
-    level: "Bachelors",
-    field: "Engineering",
-    covers: "Full Tuition",
-    location: "Lalitpur",
-    benefits: ["Exam Fee", "Living Allowance"],
-    status: "limited",
-    statusText: "CLOSING SOON",
-    deadline: "Oct 25,2024",
-  },
-  {
-    id: 8,
-    type: "Talent-Based",
-    discount: "100% off",
-    title: "Sports Excellence Scholarship",
-    university: "Tribhuvan University",
-    level: "Bachelors",
-    field: "Sports Science",
-    covers: "Full Tuition",
-    location: "Kathmandu",
-    benefits: ["Exam Fee", "Equipment"],
-    status: "available",
-    deadline: "Nov 15,2024",
-  },
-  {
-    id: 9,
-    type: "Merit-Based",
-    discount: "100% off",
-    title: "MBBS Merit Scholarship",
-    university: "Kathmandu Medical College",
-    level: "Bachelors",
-    field: "Medicine & Health",
-    covers: "Full Tuition",
-    location: "Kathmandu",
-    benefits: ["Exam Fee", "Lab Fee"],
-    status: "high-competition",
-    deadline: "Sep 30,2024",
-  },
-  {
-    id: 10,
-    type: "Need-Based",
-    discount: "60% off",
-    title: "Purbanchal University Grant",
-    university: "Purbanchal University",
-    level: "Bachelors",
-    field: "Management / Business",
-    covers: "Partial Tuition",
-    location: "Biratnagar",
-    benefits: ["Tuition Fee"],
-    status: "available",
-    deadline: "Dec 10,2024",
-  },
-  {
-    id: 11,
-    type: "Merit-Based",
-    discount: "100% off",
-    title: "Research Innovation Scholarship",
-    university: "Nepal Academy of Science",
-    level: "Masters",
-    field: "Research",
-    covers: "Full Tuition",
-    location: "Kathmandu",
-    benefits: ["Exam Fee", "Research Grant"],
-    status: "available",
-    deadline: "Jan 5,2025",
-  },
-  {
-    id: 12,
-    type: "Merit-Based",
-    discount: "80% off",
-    title: "Engineering Merit Award",
-    university: "Pulchowk Campus",
-    level: "Bachelors",
-    field: "Engineering",
-    covers: "Partial Tuition",
-    location: "Lalitpur",
-    benefits: ["Exam Fee"],
-    status: "limited",
-    statusText: "LIMITED SEATS",
-    deadline: "Oct 30,2024",
-  },
-]
+import Link from "next/link";
+import { getAllScholarships } from "@/lib/scholarships-data";
+import { useState } from "react";
 
 export default function ScholarshipGrid() {
-  return (
-    <div>
-      {/* Results Header */}
-      <div className="mb-6">
-        <div className="flex items-center justify-between mb-4">
-          <h2 className="text-lg font-medium text-gray-900">Showing 100 results for Scholarship</h2>
-        </div>
+  const scholarships = getAllScholarships();
+  const [favorites, setFavorites] = useState<string[]>([]);
 
-        {/* Active Filters */}
-        <div className="flex items-center gap-2 flex-wrap">
-          <span className="text-sm text-gray-600">Active :</span>
-          <div className="flex items-center gap-2 bg-gray-100 rounded-full px-3 py-1 text-sm">
-            Bachelor
-            <button className="ml-1 text-gray-500 hover:text-gray-700">×</button>
-          </div>
-          <div className="flex items-center gap-2 bg-gray-100 rounded-full px-3 py-1 text-sm">
-            Bachelor
-            <button className="ml-1 text-gray-500 hover:text-gray-700">×</button>
-          </div>
-          <button className="text-sm text-blue-600 hover:text-blue-700 font-medium">Clear All</button>
-        </div>
+  const toggleFavorite = (id: string) => {
+    setFavorites((prev) =>
+      prev.includes(id) ? prev.filter((f) => f !== id) : [...prev, id]
+    );
+  };
+
+  // Create duplicate scholarships for demo purposes to show various states
+  const demoScholarships = scholarships.flatMap((scholarship) => [
+    {
+      ...scholarship,
+      status: "open" as const,
+      availability: "High Competition",
+    },
+    {
+      ...scholarship,
+      id: `${scholarship.id}-2`,
+      status: "open" as const,
+      availability: "Available Now",
+    },
+    {
+      ...scholarship,
+      id: `${scholarship.id}-3`,
+      status: "closed" as const,
+      availability: "Limited seats",
+    },
+    {
+      ...scholarship,
+      id: `${scholarship.id}-4`,
+      status: "open" as const,
+      availability: "Available Now",
+    },
+  ]);
+
+  return (
+    <div className="space-y-6">
+      {/* Results count */}
+      <div className="text-sm text-gray-600">
+        Showing {demoScholarships.length} scholarships
       </div>
 
-      {/* Scholarship Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-        {scholarships.map((scholarship) => (
-          <ScholarshipCard key={scholarship.id} scholarship={scholarship} />
-        ))}
+      {/* Scholarship Grid - 2 columns */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        {demoScholarships.map((scholarship, index) => {
+          const isClosingSoon = index % 3 === 2;
+          const isLimitedSeats = index % 4 === 2;
+          const isAvailableNow = index % 4 === 1;
+          const isHighCompetition = index % 4 === 0;
+
+          return (
+            <div
+              key={scholarship.id + index}
+              className="bg-white rounded-lg border border-gray-200 hover:border-blue-300 hover:shadow-lg transition-all duration-200"
+            >
+              <div className="p-5">
+                {/* Header */}
+                <div className="flex items-start justify-between mb-3">
+                  <div className="flex items-center gap-2 flex-wrap">
+                    <span className="px-3 py-1 bg-blue-50 text-blue-700 text-xs font-semibold rounded">
+                      Merit-Based
+                    </span>
+                    <span className="px-3 py-1 bg-green-50 text-green-700 text-xs font-bold rounded border border-green-200">
+                      100% off
+                    </span>
+                  </div>
+                  <button
+                    onClick={() => toggleFavorite(scholarship.id)}
+                    className="text-gray-400 hover:text-red-500 transition"
+                  >
+                    <i
+                      className={`${
+                        favorites.includes(scholarship.id)
+                          ? "fa-solid"
+                          : "fa-regular"
+                      } fa-heart text-lg`}
+                    ></i>
+                  </button>
+                </div>
+
+                {/* Title */}
+                <h3 className="text-xl font-bold text-gray-900 mb-1">
+                  TU Merit Scholarship
+                </h3>
+                <p className="text-gray-600 text-sm mb-4">
+                  Tribhuvan University
+                </p>
+
+                {/* Details Grid */}
+                <div className="grid grid-cols-2 gap-3 mb-4 text-sm">
+                  <div>
+                    <p className="text-gray-500 text-xs mb-0.5">Level</p>
+                    <p className="font-semibold text-gray-900">Bachelors</p>
+                  </div>
+                  <div>
+                    <p className="text-gray-500 text-xs mb-0.5">Field</p>
+                    <p className="font-semibold text-gray-900">Engineering</p>
+                  </div>
+                  <div>
+                    <p className="text-gray-500 text-xs mb-0.5">COVERS</p>
+                    <p className="font-semibold text-gray-900">Full Tuition</p>
+                  </div>
+                  <div>
+                    <p className="text-gray-500 text-xs mb-0.5">LOCATION</p>
+                    <p className="font-semibold text-gray-900">Kathmandu</p>
+                  </div>
+                </div>
+
+                {/* Benefits */}
+                <div className="flex items-center gap-2 mb-4 pb-4 border-b border-gray-200">
+                  <span className="text-xs text-gray-500 font-semibold">
+                    BENEFITS
+                  </span>
+                  <div className="flex items-center gap-1.5">
+                    <div className="flex items-center gap-1 px-2 py-1 bg-gray-50 rounded text-xs text-gray-700">
+                      <i className="fa-solid fa-file-lines"></i>
+                      <span>Exam Fee</span>
+                    </div>
+                    <div className="flex items-center gap-1 px-2 py-1 bg-gray-50 rounded text-xs text-gray-700">
+                      <i className="fa-solid fa-file-lines"></i>
+                      <span>Exam Fee</span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Status and Actions */}
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-2 flex-wrap">
+                    {isHighCompetition && (
+                      <span className="flex items-center gap-1 px-2 py-1 bg-yellow-50 text-yellow-700 text-xs font-semibold rounded">
+                        <i className="fa-solid fa-fire"></i>
+                        High Competition
+                      </span>
+                    )}
+                    {isAvailableNow && (
+                      <span className="flex items-center gap-1 px-2 py-1 bg-green-50 text-green-700 text-xs font-semibold rounded">
+                        <i className="fa-solid fa-circle text-[6px]"></i>
+                        Available Now
+                      </span>
+                    )}
+                    {isLimitedSeats && (
+                      <span className="flex items-center gap-1 px-2 py-1 bg-red-50 text-red-700 text-xs font-semibold rounded">
+                        <i className="fa-solid fa-circle text-[6px]"></i>
+                        Limited seats
+                      </span>
+                    )}
+                    {isClosingSoon && (
+                      <span className="text-red-600 text-xs font-bold uppercase">
+                        CLOSING SOON
+                      </span>
+                    )}
+                  </div>
+                  <div className="flex items-center gap-1 text-gray-600 text-xs">
+                    <i className="fa-regular fa-calendar"></i>
+                    <span>Oct 15, 2024</span>
+                  </div>
+                </div>
+
+                {/* Action Buttons */}
+                <div className="grid grid-cols-2 gap-3 mt-4">
+                  <Link
+                    href={`/colleges/scholarships/${scholarship.id}`}
+                    className="px-4 py-2.5 border border-gray-300 text-gray-900 rounded-lg font-semibold text-sm text-center hover:bg-gray-50 transition"
+                  >
+                    Details
+                  </Link>
+                  <Link
+                    href={`/colleges/scholarships/${scholarship.id}`}
+                    className={`px-4 py-2.5 ${
+                      scholarship.status === "closed"
+                        ? "bg-gray-900 hover:bg-gray-800"
+                        : "bg-blue-600 hover:bg-blue-700"
+                    } text-white rounded-lg font-semibold text-sm text-center transition flex items-center justify-center gap-2`}
+                  >
+                    Apply Now
+                    <i className="fa-solid fa-arrow-right text-xs"></i>
+                  </Link>
+                </div>
+              </div>
+            </div>
+          );
+        })}
       </div>
 
       {/* Pagination */}
-      <div className="flex items-center justify-center gap-2">
-        <Button variant="outline" size="icon" className="h-10 w-10 bg-transparent">
-          <ChevronLeft className="h-4 w-4" />
-        </Button>
-        <Button variant="default" size="icon" className="h-10 w-10 bg-blue-600 hover:bg-blue-700">
+      <div className="flex items-center justify-center gap-2 pt-8">
+        <button className="w-8 h-8 flex items-center justify-center border border-gray-300 rounded hover:bg-gray-50 transition">
+          <i className="fa-solid fa-chevron-left text-xs"></i>
+        </button>
+        <button className="w-8 h-8 flex items-center justify-center bg-blue-600 text-white rounded font-semibold">
           1
-        </Button>
-        <Button variant="outline" size="icon" className="h-10 w-10 bg-transparent">
+        </button>
+        <button className="w-8 h-8 flex items-center justify-center border border-gray-300 rounded hover:bg-gray-50 transition">
           2
-        </Button>
-        <Button variant="outline" size="icon" className="h-10 w-10 bg-transparent">
+        </button>
+        <button className="w-8 h-8 flex items-center justify-center border border-gray-300 rounded hover:bg-gray-50 transition">
           3
-        </Button>
-        <Button variant="outline" size="icon" className="h-10 w-10 bg-transparent">
-          <ChevronRight className="h-4 w-4" />
-        </Button>
+        </button>
+        <button className="w-8 h-8 flex items-center justify-center border border-gray-300 rounded hover:bg-gray-50 transition">
+          <i className="fa-solid fa-chevron-right text-xs"></i>
+        </button>
       </div>
     </div>
-  )
+  );
 }
